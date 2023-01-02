@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+  <h2>Register</h2>
+</div>
+<div class="container">
+  <form method="post">
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input name="username" id="username" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="input-group">
+      <label for="email" >email</label>
+      <input name="email" id="email" value="{{ request.form['email'] }}" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="input-group">
+      <label for="group" >group</label>
+      <input name="group" id="group" value="{{ request.form['group'] }}" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <hr>
+    <div class="input-group">
+      <input type="submit" value="Register" class="form-control" aria-describedby="basic-addon1">
+    </div>
+  </form>
+</div>
+{% endblock %}

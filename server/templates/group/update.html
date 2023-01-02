@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}Edit Group -- {{ post['group_name'] }} {% endblock %}</h2>
+</div>
+<div class="container">
+  <form class="admin-form form-horizontal" method="post">
+    <div class="form-group">
+      <label for="group_name" class="col-md-2 control-label">group_name</label>
+      <div class="col-md-10">
+        <input name="group_name" id="group_name"
+               value="{{ request.form['group_name'] or post['group_name'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="group_description" class="col-md-2 control-label">group_description</label>
+      <div class="col-md-10">
+        <input name="group_description" id="group_description"
+               value="{{ request.form['group_description'] or post['group_description'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10 submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+      <div class="col-md-offset-2 submit-row">
+        <form action="{{ url_for('group.delete', id=post['group_id']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
+      </div>
+</div>
+{% endblock %}

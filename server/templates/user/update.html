@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}Edit User -- {{ post['user_name'] }} {% endblock %}</h2>
+</div>
+<div class="container">
+  <form method="post">
+    <div class="input-group">
+      <label for="user_name">user_name</label>
+      <input name="user_name" id="user_name"
+             value="{{ request.form['user_name'] or post['user_name'] }}"  class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <div class="input-group">
+      <label for="user_email">user_email</label>
+      <input name="user_email" id="user_email"
+             value="{{ request.form['user_email'] or post['user_email'] }}" class="form-control" aria-describedby="basic-addon1" required>
+    </div>
+    <h4>Choose user groups</h4>
+    <div class="input-group">
+      {% for k, v in post['user_group'].items() %}
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="user_group" id="user_group" value="{{ v.group_name }}" {% if v.group_name !="Admin" %} checked {% endif %}  >
+        <label class="form-check-label" for="user_group" class="form-control" aria-describedby="basic-addon1" >
+          {{ v.group_name }}
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+      <div class="submit-row">
+        <form action="{{ url_for('user.delete', id=post['user_id']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
+      </div>
+</div>
+{% endblock %}

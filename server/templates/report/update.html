@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}Edit Report -- {{ post['CeleryTaskID'] }} {% endblock %}</h2>
+</div>
+<div class="container">
+  <form class="admin-form form-horizontal" method="post">
+    <div class="form-group">
+      <label for="TaskID" class="col-md-2 control-label">TaskID</label>
+      <div class="col-md-10">
+        <input name="TaskID" id="TaskID"
+               value="{{ request.form['TaskID'] or post['TaskID'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="DeviceId" class="col-md-2 control-label">DeviceId</label>
+      <div class="col-md-10">
+        <input name="DeviceId" id="DeviceId"
+               value="{{ request.form['DeviceId'] or post['DeviceId'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="QueueId" class="col-md-2 control-label">QueueId</label>
+      <div class="col-md-10">
+        <input name="QueueId" id="QueueId"
+               value="{{ request.form['QueueId'] or post['QueueId'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ContainerId" class="col-md-2 control-label">ContainerId</label>
+      <div class="col-md-10">
+        <input name="ContainerId" id="ContainerId"
+               value="{{ request.form['ContainerId'] or post['ContainerId'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ParameterList" class="col-md-2 control-label">ParameterList</label>
+      <div class="col-md-10">
+        <input name="ParameterList" id="ParameterList"
+               value="{{ request.form['ParameterList'] or post['ParameterList'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Status" class="col-md-2 control-label">Status</label>
+      <div class="col-md-10">
+        <input name="Status" id="Status"
+               value="{{ request.form['Status'] or post['Status'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Description" class="col-md-2 control-label">Description</label>
+      <div class="col-md-10">
+        <input name="Description" id="Description"
+               value="{{ request.form['Description'] or post['Description'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="LogLocation" class="col-md-2 control-label">LogLocation</label>
+      <div class="col-md-10">
+        <input name="LogLocation" id="LogLocation"
+               value="{{ request.form['LogLocation'] or post['LogLocation'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ReportLocation" class="col-md-2 control-label">ReportLocation</label>
+      <div class="col-md-10">
+        <input name="ReportLocation" id="ReportLocation"
+               value="{{ request.form['ReportLocation'] or post['ReportLocation'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="EmailReceiverList" class="col-md-2 control-label">EmailReceiverList</label>
+      <div class="col-md-10">
+        <input name="EmailReceiverList" id="EmailReceiverList"
+               value="{{ request.form['EmailReceiverList'] or post['EmailReceiverList'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Current" class="col-md-2 control-label">Current</label>
+      <div class="col-md-10">
+        <input name="Current" id="Current"
+               value="{{ request.form['Current'] or post['Current'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="CeleryTaskStartTime" class="col-md-2 control-label">CeleryTaskStartTime</label>
+      <div class="col-md-10">
+        <input name="CeleryTaskStartTime" id="CeleryTaskStartTime"
+               value="{{ request.form['CeleryTaskStartTime'] or post['CeleryTaskStartTime'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="StartRunTime" class="col-md-2 control-label">StartRunTime</label>
+      <div class="col-md-10">
+        <input name="StartRunTime" id="StartRunTime"
+               value="{{ request.form['StartRunTime'] or post['StartRunTime'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="LastRunTime" class="col-md-2 control-label">LastRunTime</label>
+      <div class="col-md-10">
+        <input name="LastRunTime" id="LastRunTime"
+               value="{{ request.form['LastRunTime'] or post['LastRunTime'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="FailedReason" class="col-md-2 control-label">FailedReason</label>
+      <div class="col-md-10">
+        <input name="FailedReason" id="FailedReason"
+               value="{{ request.form['FailedReason'] or post['FailedReason'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ResyncPath" class="col-md-2 control-label">ResyncPath</label>
+      <div class="col-md-10">
+        <input name="ResyncPath" id="ResyncPath"
+               value="{{ request.form['ResyncPath'] or post['ResyncPath'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="TaskOwner" class="col-md-2 control-label">TaskOwner</label>
+      <div class="col-md-10">
+        <input name="TaskOwner" id="TaskOwner"
+               value="{{ request.form['TaskOwner'] or post['TaskOwner'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Group" class="col-md-2 control-label">Group</label>
+      <div class="col-md-10">
+        <input name="Group" id="Group"
+               value="{{ request.form['Group'] or post['Group'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10 submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+      <div class="col-md-offset-2">
+        <form action="{{ url_for('report.delete', id=post['CeleryTaskID']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
+      </div>
+</div>
+{% endblock %}

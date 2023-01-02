@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Device</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Alias</th>
+      <th>IP</th>
+      <th>MAC</th>
+      <th>Node</th>
+      <th>PID</th>
+      <th>QueueName</th>
+      <th>Status</th>
+      <th>RegisterTime</th>
+      <th>ParticulSDK</th>
+      <th>Owner</th>
+      <th>Group</th>
+      <th>SystemType</th>
+      <th>Platform</th>
+      <th>DeviceType</th>
+      <th>HostID</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td >{{ post['ID'] }}</td>
+      <td class="body">{{ post['Alias'] }}</td>
+      <td class="body">{{ post['IP'] }}</td>
+      <td class="body">{{ post['MAC'] }}</td>
+      <td class="body">{{ post['Node'] }}</td>
+      <td class="body">{{ post['PID'] }}</td>
+      <td class="body">{{ post['QueueName'] }}</td>
+      <td class="body">{{ post['Status'] }}</td>
+      <td class="body">{{ post['RegisterTime'] }}</td>
+      <td class="body">{{ post['ParticulSDK'] }}</td>
+      <td class="body">{{ post['Owner'] }}</td>
+      <td class="body">{{ post['Group'] }}</td>
+      <td class="body">{{ post['SystemType'] }}</td>
+      <td class="body">{{ post['Platform'] }}</td>
+      <td class="body">{{ post['DeviceType'] }}</td>
+      <td class="body">{{ post['HostID'] }}</td>
+      <td> {% if g.user['user_name'] == post['Owner'] %}
+        <a class="action" href="{{ url_for('resource.device_update', id=post['ID']) }}">Edit</a>
+           {% elif 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('resource.device_update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] != None and post['Group'].split('_')[0] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('resource.device_update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] == None or post['Group'] == 'None' or post['Group'] == '' %}
+        <a class="action" href="{{ url_for('resource.device_update', id=post['ID']) }}">Edit</a>
+           {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      {% if g.user %}
+      <a class="action" href="{{ url_for('resource.device_create') }}">Create New</a>
+      {% endif %}
+    </button>
+  </div>
+</div>
+{% endblock %}

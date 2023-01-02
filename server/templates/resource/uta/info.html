@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>UTA</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Alias</th>
+      <th>Owner</th>
+      <th>Group</th>
+      <th>Md5</th>
+      <th>Status</th>
+      <th>Project</th>
+      <th>SourcePath</th>
+      <th>BrainppDir</th>
+      <th>FtpDir</th>
+      <th>TarName</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td >{{ post['ID'] }}</td>
+      <td class="body">{{ post['Alias'] }}</td>
+      <td class="body">{{ post['Owner'] }}</td>
+      <td class="body">{{ post['Group'] }}</td>
+      <td class="body">{{ post['Md5'] }}</td>
+      <td class="body">{{ post['Status'] }}</td>
+      <td class="body">{{ post['Project'] }}</td>
+      <td class="body">{{ post['SourcePath'] }}</td>
+      <td class="body">{{ post['BrainppDir'] }}</td>
+      <td class="body">{{ post['FtpDir'] }}</td>
+      <td class="body">{{ post['TarName'] }}</td>
+      <td> {% if g.user['user_name'] == post['Owner'] %}
+        <a class="action" href="{{ url_for('resource.uta_update', id=post['ID']) }}">Edit</a>
+           {% elif 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('resource.uta_update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] != None and post['Group'].split('_')[0] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('resource.uta_update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] == None or post['Group'] == 'None' or post['Group'] == '' %}
+        <a class="action" href="{{ url_for('resource.uta_update', id=post['ID']) }}">Edit</a>
+           {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      {% if g.user %}
+      <a class="action" href="{{ url_for('resource.uta_create') }}">Create New</a>
+      {% endif %}
+    </button>
+  </div>
+</div>
+{% endblock %}

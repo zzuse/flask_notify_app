@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Report</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>CeleryTaskID</th>
+      <th>TaskID</th>
+      <th>TaskOwner</th>
+      <th>Group</th>
+      <th>DeviceId</th>
+      <th>QueueId</th>
+      <th>ContainerId</th>
+      <th>Status</th>
+      <th>Description</th>
+      <th>LogLocation</th>
+      <th>ReportLocation</th>
+      <th>EmailReceiverList</th>
+      <th>Current</th>
+      <th>CeleryTaskStartTime</th>
+      <th>StartRunTime</th>
+      <th>LastRunTime</th>
+      <th>FailedReason</th>
+      <th>ResyncPath</th>
+      <th>ParameterList</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td ><a class="action" href="{{ url_for('chart.index', id=post['CeleryTaskID']) }}">{{ post['CeleryTaskID'] }}</a> </td>
+      <td class="body">{{ post['TaskID'] }}</td>
+      <td class="body">{{ post['TaskOwner'] }}</td>
+      <td class="body">{{ post['Group'] }}</td>
+      <td class="body">{{ post['DeviceId'] }}</td>
+      <td class="body">{{ post['QueueId'] }}</td>
+      <td class="body">{{ post['ContainerId'] }}</td>
+      <td class="body">{{ post['Status'] }}</td>
+      <td class="body">{{ post['Description'] }}</td>
+      <td class="body">{{ post['LogLocation'] }}</td>
+      <td class="body">{{ post['ReportLocation'] }}</td>
+      <td class="body">{{ post['EmailReceiverList'] }}</td>
+      <td class="body">{{ post['Current'] }}</td>
+      <td class="body">{{ post['CeleryTaskStart'] }}</td>
+      <td class="body">{{ post['StartRunTime'] }}</td>
+      <td class="body">{{ post['LastRunTime'] }}</td>
+      <td class="body">{{ post['FailedReason'] }}</td>
+      <td class="body">{{ post['ResyncPath'] }}</td>
+      <td class="body">{{ post['ParameterList'] }}</td>
+      <td> {% if g.user['user_name'] == post['TaskOwner'] %}
+        <a class="action" href="{{ url_for('report.update', id=post['CeleryTaskID']) }}">Edit</a>
+           {% elif 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('report.update', id=post['CeleryTaskID']) }}">Edit</a>
+           {% elif post['Group'] != None and post['Group'].split('_')[0] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('report.update', id=post['CeleryTaskID']) }}">Edit</a>
+           {% elif post['Group'] == None or post['Group'] == 'None' or post['Group'] == '' %}
+        <a class="action" href="{{ url_for('report.update', id=post['CeleryTaskID']) }}">Edit</a>
+           {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}New Device{% endblock %}</h2>
+</div>
+<div class="container">
+  <form class="admin-form form-horizontal" method="post">
+    <div class="form-group">
+      <label for="Alias" class="col-md-2 control-label">Alias</label>
+      <div class="col-md-10">
+        <input name="Alias" id="Alias"
+               value="{{ request.form['Alias'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="IP" class="col-md-2 control-label">IP</label>
+      <div class="col-md-10">
+        <input name="IP" id="IP"
+               value="{{ request.form['IP'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="MAC" class="col-md-2 control-label">MAC</label>
+      <div class="col-md-10">
+        <input name="MAC" id="MAC"
+               value="{{ request.form['MAC'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="SystemType" class="col-md-2 control-label">SystemType</label>
+      <div class="col-md-10">
+        <input name="SystemType" id="SystemType"
+               value="{{ request.form['SystemType'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Platform" class="col-md-2 control-label">Platform</label>
+      <div class="col-md-10">
+        <input name="Platform" id="Platform"
+               value="{{ request.form['Platform'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Node" class="col-md-2 control-label">Node</label>
+      <div class="col-md-10">
+        <input name="Node" id="Node"
+               value="{{ request.form['Node'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Status" class="col-md-2 control-label">Status</label>
+      <div class="col-md-10">
+        <input name="Status" id="Status"
+               value="{{ request.form['Status'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="PID" class="col-md-2 control-label">PID</label>
+      <div class="col-md-10">
+        <input name="PID" id="PID"
+               value="{{ request.form['PID'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="HostID" class="col-md-2 control-label">HostID</label>
+      <div class="col-md-10">
+        <input name="HostID" id="HostID"
+               value="{{ request.form['HostID'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="DeviceType" class="col-md-2 control-label">DeviceType</label>
+      <div class="col-md-10">
+        <input name="DeviceType" id="DeviceType"
+               value="{{ request.form['DeviceType'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Owner" class="col-md-2 control-label">Owner</label>
+      <div class="col-md-10">
+        <input name="Owner" id="Owner"
+               value="{{ request.form['Owner'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Group" class="col-md-2 control-label">Group</label>
+      <div class="col-md-10">
+        <input name="Group" id="Group"
+               value="{{ request.form['Group'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="QueueName" class="col-md-2 control-label">QueueName</label>
+      <div class="col-md-10">
+        <input name="QueueName" id="QueueName"
+               value="{{ request.form['QueueName'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ParticulSDK" class="col-md-2 control-label">ParticulSDK</label>
+      <div class="col-md-10">
+        <input name="ParticulSDK" id="ParticulSDK"
+               value="{{ request.form['ParticulSDK'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10 submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

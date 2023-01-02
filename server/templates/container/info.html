@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Containers</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Path</th>
+      <th>Md5</th>
+      <th>MailList</th>
+      <th>Owner</th>
+      <th>Group</th>
+      <th>CreateTime</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td >{{ post['Alias'] }}</td>
+      <td class="body">{{ post['Type'] }}</td>
+      <td class="body">{{ post['Path'] }}</td>
+      <td class="body">{{ post['Md5'] }}</td>
+      <td class="body">{{ post['MailList'] }}</td>
+      <td class="body">{{ post['Owner'] }}</td>
+      <td class="body">{{ post['Group'] }}</td>
+      <td class="body">{{ post['CreatedTime'] }}</td>
+      <td> {% if g.user['user_name'] == post['Owner'] %}
+        <a class="action" href="{{ url_for('container.update', id=post['ID']) }}">Edit</a>
+           {% elif 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('container.update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] != None and post['Group'].split('_')[0] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('container.update', id=post['ID']) }}">Edit</a>
+           {% elif post['Group'] == None or post['Group'] == 'None' or post['Group'] == '' %}
+        <a class="action" href="{{ url_for('container.update', id=post['ID']) }}">Edit</a>
+           {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      {% if g.user %}
+      <a class="action" href="{{ url_for('container.create') }}">Create New</a>
+      {% endif %}
+    </button>
+  </div>
+</div>
+{% endblock %}

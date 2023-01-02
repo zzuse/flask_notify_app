@@ -1,0 +1,11 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<div class="alert alert-success" role="alert">Hello, welcome to platform Admin Page</div>
+<div class="alert alert-info" role="alert">Not you want? <a href="{{ url_for('index') }}" class="alert-link">GO BACK</a></div>
+{% if g.user['user_name'] == 'root' %}
+  <div class="alert alert-info" role="alert">Log Out? <a href="{{ url_for('auth.logout') }}" class="alert-link">LOG OUT</a></div>
+{% else %}
+  <div class="alert alert-info" role="alert">Log In? <a href="{{ url_for('auth.admin_login') }}" class="alert-link">ADMIN LOGIN</a></div>
+{% endif %}
+{% endblock %}

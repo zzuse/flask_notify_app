@@ -1,0 +1,60 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}PLATFORM</title>
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+
+<!--<nav class="navbar navbar-default nav-pills nav-justified navbar-inverse">-->
+<nav class="navbar navbar-default nav-pills nav-justified">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{{ url_for('index') }}">PLATFORM</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="recipes-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {% if g.user %}
+        <li><a class="action" href="{{ url_for('container.index') }}">Container</a></li>
+        <li><a class="action" href="{{ url_for('user.index') }}">User</a></li>
+        <li><a class="action" href="{{ url_for('group.index') }}">Group</a></li>
+        <li><a class="action" href="{{ url_for('report.index') }}">Report</a></li>
+        <li><a class="action" href="{{ url_for('resource.device_index') }}">Device</a></li>
+        <li><a class="action" href="{{ url_for('resource.tool_index') }}">Tool</a></li>
+        <li><a class="action" href="{{ url_for('resource.uta_index') }}">Uta</a></li>
+        <li><a class="action" href="{{ url_for('resource.data_index') }}">Data</a></li>
+        <li><a class="action" href="{{ url_for('admin.index') }}">Admin</a></li>
+        {% endif %}
+        <li><a class="action" href="{{ url_for('api.root') }}">API</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Welcome!</a></li>
+        {% if g.user %}
+        <li><a href="{{ url_for('auth.logout') }}">{{ g.user['user_name'] }}</a>
+        <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+          {% else %}
+        <li><a href="{{ url_for('auth.register') }}">Register</a>
+        <li><a href="{{ url_for('auth.login') }}">Log In</a>
+          {% endif %}
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!-- /.container -->
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </div>
+</section>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" ></script>
+

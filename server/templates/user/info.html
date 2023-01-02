@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Users</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Group</th>
+      <th>Token</th>
+      <th>RegisterTime</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td>{{ post['user_name'] }}</td>
+      <td class="body">{{ post['user_email'] }}</td>
+      <td class="body">{{ post['user_group'] }}</td>
+      <td class="body">{{ post['user_token'] }}</td>
+      <td class="body">{{ post['registerTime'] }}</td>
+      <td>{% if g.user['user_name'] == post['user_name'] %}
+        <a class="action" href="{{ url_for('user.update', id=post['user_id']) }}">Edit</a>
+          {% elif '_admin' in g.user['user_group'] and post['user_group'] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('user.update', id=post['user_id']) }}">Edit</a>
+          {% elif 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('user.update', id=post['user_id']) }}">Edit</a>
+          {% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      {% if g.user %}
+      <a class="action" href="{{ url_for('auth.register') }}">Create New</a>
+      {% endif %}
+    </button>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}Edit UTA -- {{ post['ID'] }} {% endblock %}</h2>
+</div>
+<div class="container">
+  <form class="admin-form form-horizontal" method="post">
+    <div class="form-group">
+      <label for="ID" class="col-md-2 control-label">ID</label>
+      <div class="col-md-10">
+        <input name="ID" id="ID"
+               value="{{ request.form['ID'] or post['ID'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Alias" class="col-md-2 control-label">Alias</label>
+      <div class="col-md-10">
+        <input name="Alias" id="Alias"
+               value="{{ request.form['Alias'] or post['Alias'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Owner" class="col-md-2 control-label">Owner</label>
+      <div class="col-md-10">
+        <input name="Owner" id="Owner"
+               value="{{ request.form['Owner'] or post['Owner'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Group" class="col-md-2 control-label">Group</label>
+      <div class="col-md-10">
+        <input name="Group" id="Group"
+               value="{{ request.form['Group'] or post['Group'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Md5" class="col-md-2 control-label">Md5</label>
+      <div class="col-md-10">
+        <input name="Md5" id="Md5"
+               value="{{ request.form['Md5'] or post['Md5'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Project" class="col-md-2 control-label">Project</label>
+      <div class="col-md-10">
+        <input name="Project" id="Project"
+               value="{{ request.form['Project'] or post['Project'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="SourcePath" class="col-md-2 control-label">SourcePath</label>
+      <div class="col-md-10">
+        <input name="SourcePath" id="SourcePath"
+               value="{{ request.form['SourcePath'] or post['SourcePath'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="BrainppDir" class="col-md-2 control-label">BrainppDir</label>
+      <div class="col-md-10">
+        <input name="BrainppDir" id="BrainppDir"
+               value="{{ request.form['BrainppDir'] or post['BrainppDir'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="FtpDir" class="col-md-2 control-label">FtpDir</label>
+      <div class="col-md-10">
+        <input name="FtpDir" id="FtpDir"
+               value="{{ request.form['FtpDir'] or post['FtpDir'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="TarName" class="col-md-2 control-label">TarName</label>
+      <div class="col-md-10">
+        <input name="TarName" id="TarName"
+               value="{{ request.form['TarName'] or post['TarName'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Status" class="col-md-2 control-label">Status</label>
+      <div class="col-md-10">
+        <input name="Status" id="Status"
+               value="{{ request.form['Status'] or post['Status'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10 submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+      <div class="col-md-offset-2 submit-row">
+        <form action="{{ url_for('resource.uta_delete', id=post['ID']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
+      </div>
+</div>
+{% endblock %}

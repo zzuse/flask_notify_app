@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Groups</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td>{{ post['group_name'] }}</td>
+      <td>{{ post['group_description'] }}</td>
+      <td>
+        {% if 'Admin' in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('group.update', id=post['group_id']) }}">Edit</a>
+        {% elif '_admin' in g.user['user_group'] and post['group_name'] in g.user['user_group'] %}
+        <a class="action" href="{{ url_for('group.update', id=post['group_id']) }}">Edit</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="container">
+  <div class="col-md-4">
+    {% if g.user['user_group'] == 'Admin' %}
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      <a class="action" href="{{ url_for('group.create') }}">Create New</a>
+    </button>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
