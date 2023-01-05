@@ -17,9 +17,10 @@ class Config(object, metaclass=Singleton):
             pass
 
         if self.env == "local":
-            from server.config.cfg_server_local import Config
-            self.server_cfg = Config
-            self.celery_cfg = "server.config.cfg_celery_local"
+            from server.config.cfg_server_local import ServerConfig
+            from server.config.cfg_celery_local import CeleryConfig
+            self.server_cfg = ServerConfig
+            self.celery_cfg = CeleryConfig
 
         if self.env == "test":
             print("Need to be implemented")

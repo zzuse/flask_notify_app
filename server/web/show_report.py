@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 from server.web.auth import login_required
 from server.database.db_manager import g_dbm
 
-report_bp = Blueprint('report', __name__, url_prefix='/report')
+report_bp = Blueprint('report', __name__, url_prefix='/report', template_folder="templates")
 
 
 @report_bp.route('/')
@@ -20,6 +20,8 @@ def index():
 """TODO query_report_by_status"""
 """TODO query_join_report_info_by_email"""
 """TODO uery_join_report_info_by_id"""
+
+
 @report_bp.route('/<id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):

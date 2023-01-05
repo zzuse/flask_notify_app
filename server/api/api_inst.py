@@ -1,19 +1,19 @@
-from flask import Api
+from flask_restx import Api
 from flask import request
 from functools import wraps
 
-
 authorizations = {
-     'api_key' : {
-         'type' : 'apiKey',
-         'in' : 'header',
-         'name' : 'X-API_KEY'
-     }
+    'api_key': {
+        'type': 'apiKey',
+        'in': 'header',
+        'name': 'X-API_KEY'
+    }
 }
 
 g_api = Api(version='1.0', title='API',
-              description='Automation Testing System API, Flask RestPlus powered API',
+            description='Automation Testing System API, Flask RestPlus powered API',
             authorizations=authorizations)
+
 
 def token_required(f):
     @wraps(f)
@@ -27,10 +27,11 @@ def token_required(f):
             return {'message': 'Token is missing'}, 401
 
         if token != 'my_token':
-            return {'message' : 'Your token is wrong'}
+            return {'message': 'Your token is wrong'}
 
         print('TOKEN {}'.format(token))
         return f(*args, **kwargs)
+
     return decorated
 
 

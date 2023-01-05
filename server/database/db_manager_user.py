@@ -3,6 +3,7 @@ from .db_base import DBBase
 from server.model.m_user import UserModel
 from server.flask_inst import g_app
 
+
 # This clase can only be used in class DBManager. Because this clase has no db create_all() and no self.db_inst
 # VersionModel use for user authentication check.
 class DBManagerUser(DBBase):
@@ -33,7 +34,7 @@ class DBManagerUser(DBBase):
             return False
         return True
 
-    def query_user_by_name(self,username):
+    def query_user_by_name(self, username):
         if not username:
             return False
         d = None
@@ -112,11 +113,11 @@ class DBManagerUser(DBBase):
             return "Error happened in merge database"
         return {"user_id": c_info["user_id"]}
 
-    def delete_user_by_id(self,id):
+    def delete_user_by_id(self, id):
         if not id:
             return False
         ret = "SUCCESS"
-        logger.info("delete user by id : %s"%id)
+        logger.info("delete user by id : %s" % id)
         with g_app.app_context():
             try:
                 d = UserModel.query.filter_by(user_id=id).first()

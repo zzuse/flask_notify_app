@@ -7,6 +7,7 @@ import traceback
 from datetime import datetime
 from server.flask_inst import g_app
 
+
 # This clase can only be used in class DBManager. Because this class has no db create_all() and no self.db_inst
 class DBManagerReport(DBBase):
     # db operation for report
@@ -269,7 +270,7 @@ class DBManagerReport(DBBase):
             try:
                 for r in ReportModel.query.filter(
                         or_(ReportModel.Status == 'START', ReportModel.Status == 'REVOKING')).filter(
-                        ReportModel.DeviceId == deviceid).all():
+                    ReportModel.DeviceId == deviceid).all():
                     arr.append(r.to_dict_datetime())
                 logger.info("query report by status and device : %s" % (arr))
             except Exception as e:

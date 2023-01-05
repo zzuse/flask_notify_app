@@ -1,6 +1,6 @@
 from datetime import datetime
-from server.database.db import g_db as db
-from server.database.db import PATH_MAX,PATH_MIN,NOR_STR,SUPER_MAX,TINY_STR
+from server.db_inst import g_db as db
+from server.db_inst import PATH_MAX,PATH_MIN,NOR_STR, TINY_STR
 
 class ReportModel(db.Model):
 

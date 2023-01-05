@@ -1,7 +1,5 @@
-from flask_restplus import Resource
+from flask_restx import Resource, fields
 from flask import request
-from webargs import fields
-from webargs.flaskparser import use_kwargs
 from server.utils.server_logger import g_logger as logger
 from server.api.api_inst import g_api as api
 from server.config.config_inst import g_cfg
@@ -31,8 +29,8 @@ ns = api.namespace('report', description='Operations related to report')
 class ApiReport(Resource):
 
     @ns.doc(params={'id': 'CeleryTaskID', 'email': 'OneEmail', 'device_id': 'DeviceId'})
-    @use_kwargs(args)
-    def get(self,id, email, device_id):
+    # @use_kwargs(args)
+    def get(self, id, email, device_id):
         from server.server import g_dbm
         if id:
             reports = g_dbm.query_join_report_info_by_id(id)

@@ -13,6 +13,3 @@ TINY_STR = 32
 g_db = SQLAlchemy()
 g_app.config['SQLALCHEMY_DATABASE_URI'] = g_cfg.server_cfg.SQLALCHEMY_DATABASE_URI
 g_db.init_app(g_app)
-
-
-

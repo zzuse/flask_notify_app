@@ -3,7 +3,7 @@ import uuid
 from server.model.m_task import TaskModel
 from server.utils.server_logger import g_logger as logger
 from server.flask_inst import g_app
-
+import shortuuid
 
 
 # This clase can only be used in class DBManager. Because this clase has no db create_all() and no self.db_inst
@@ -21,6 +21,7 @@ class DBManagerTask(DBBase):
             str_id = uuid.uuid1()
         else:
             str_id = uuid.uuid3(uuid.NAMESPACE_DNS, id_str)
+        str_id = str(shortuuid.encode(str_id))
         t.ID = str_id
         t.Alias = task_info["alias"]
         t.Type = task_info["type"]
