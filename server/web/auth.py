@@ -83,46 +83,68 @@ def admin_login():
 
 @auth_bp.route('/login', methods=('GET', 'POST'))
 def login():
-    code = request.args.get("code", default="")
-    nl = request.args.get("next", default="")
-    print("code: {}".format(code))
-    print("next: {}".format(nl))
 
-    if code:
-        data = {
-            "client_id" : "auto",
-            "client_secret": "4774051054274",
-            "code" : code,
-            "grant_type": "authorization_code",
-            "redirect_uri": "http://automation.xxx-inc.com:5000/auth/login"
-        }
-        r1 = requests.post("https://accounts.xxx-inc.com/oauth2/token", data=data).json()
-        print("r1 {}\n----------".format(r1))
-        access_token = r1["access_token"]
-        data2 = {"token": access_token}
-        r2 = requests.post("https://accounts.xxx-inc.com/oauth2/get_info", data=data2).json()
-        print("r2 {}\n----------".format(r2))
-        username = r2["username"]
-        print("username {}\n----------".format(username))
-        oauth_email = r2["email"]
-        oauth_group = r2["groups"][0]
-        if username:
-            error = None
-            user = g_dbm.query_user_by_name(username)
-            if user is None:
-                error = 'Not exist, auto register username.'
-                print("error {}\n----------".format(error))
-                error = auto_register(username, oauth_email, oauth_group)
-                user = g_dbm.query_user_by_name(username)
-            if error is None:
-                session.clear()
-                session['user_name'] = user['user_name']
-                return redirect(url_for('index'))
-            return redirect(url_for('index'))
-        else:
-            return redirect("https://accounts.xxx-inc.com/oauth2/authorize?client_id=auto&response_type=code")
-    else:
-        return redirect("https://accounts.xxx-inc.com/oauth2/authorize?client_id=auto&response_type=code")
+    # oauth 2 don't need right now
+
+    # code = request.args.get("code", default="")
+    # nl = request.args.get("next", default="")
+    # print("code: {}".format(code))
+    # print("next: {}".format(nl))
+
+    # if code:
+        # data = {
+        #     "client_id" : "auto",
+        #     "client_secret": "4774051054274",
+        #     "code" : code,
+        #     "grant_type": "authorization_code",
+        #     "redirect_uri": "http://automation.xxx-inc.com:5000/auth/login"
+        # }
+        # r1 = requests.post("https://accounts.xxx-inc.com/oauth2/token", data=data).json()
+        # print("r1 {}\n----------".format(r1))
+        # access_token = r1["access_token"]
+        # data2 = {"token": access_token}
+        # r2 = requests.post("https://accounts.xxx-inc.com/oauth2/get_info", data=data2).json()
+        # print("r2 {}\n----------".format(r2))
+        # username = r2["username"]
+        # print("username {}\n----------".format(username))
+        # oauth_email = r2["email"]
+        # oauth_group = r2["groups"][0]
+        # if username:
+        #     error = None
+        #     user = g_dbm.query_user_by_name(username)
+        #     if user is None:
+        #         error = 'Not exist, auto register username.'
+        #         print("error {}\n----------".format(error))
+        #         error = auto_register(username, oauth_email, oauth_group)
+        #         user = g_dbm.query_user_by_name(username)
+        #     if error is None:
+        #         session.clear()
+        #         session['user_name'] = user['user_name']
+        #         return redirect(url_for('index'))
+        #     return redirect(url_for('index'))
+        # else:
+        #     return redirect("https://accounts.xxx-inc.com/oauth2/authorize?client_id=auto&response_type=code")
+    # else:
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        error = None
+        user = g_dbm.query_user_by_name(username)
+
+        if user is None:
+            error = 'Incorrect username.'
+        elif not check_password_hash(user['user_pass'], password):
+            error = 'Incorrect password.'
+
+        if error is None:
+            session.clear()
+            session['user_name'] = user['user_name']
+            g.user = user
+            print(user['user_name'])
+            return render_template('index.html')
+
+        flash(error)
+    return render_template('auth/login.html')
 
 
 @auth_bp.before_app_request
@@ -133,12 +155,14 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = g_dbm.query_user_by_name(user_name)
+        # if g.user is None:
+        #     return redirect(url_for('auth.register'))
 
 
 @auth_bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('auth.login'))
 
 
 def login_required(view):

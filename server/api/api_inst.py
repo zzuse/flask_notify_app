@@ -11,7 +11,7 @@ authorizations = {
 }
 
 g_api = Api(version='1.0', title='API',
-            description='Automation Testing System API, Flask RestPlus powered API',
+            description='Automation Testing System API, Flask RestX powered API',
             authorizations=authorizations)
 
 

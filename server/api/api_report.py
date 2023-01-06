@@ -5,23 +5,23 @@ from server.api.api_inst import g_api as api
 from server.config.config_inst import g_cfg
 import base64
 
-args = {
-    'id': fields.Str(
-            missing=None,
-        ),
-    'email': fields.Str(
-        missing=None,
-    ),
-    'device_id':fields.Str(
-            missing=None,
-        )
-}
-
-args_rerun = {
-    'id': fields.Str(
-            missing=None,
-        ),
-}
+# args = {
+#     'id': fields.Str(
+#             missing=None,
+#         ),
+#     'email': fields.Str(
+#         missing=None,
+#     ),
+#     'device_id':fields.Str(
+#             missing=None,
+#         )
+# }
+#
+# args_rerun = {
+#     'id': fields.Str(
+#             missing=None,
+#         ),
+# }
 
 ns = api.namespace('report', description='Operations related to report')
 

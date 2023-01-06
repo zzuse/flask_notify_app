@@ -9,5 +9,6 @@ index_bp = Blueprint('index', __name__, template_folder="templates")
 
 
 @index_bp.route('/')
+@index_bp.route('/index')
 def index():
     return render_template('index.html')

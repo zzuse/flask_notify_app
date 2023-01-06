@@ -1,6 +1,6 @@
 from datetime import datetime
-from server.database.db import g_db as db
-from server.database.db import LON_STR, NOR_STR
+from server.db_inst import g_db as db
+from server.db_inst import LON_STR, NOR_STR
 
 
 class UserModel(db.Model):

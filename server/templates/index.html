@@ -3,12 +3,12 @@
 {% block content %}
 <div class="container">
       <h1>Infos</h1>
-    {% if g.user %}
+<!--    {% if g.user %}-->
       <div class="alert alert-success" role="alert">Hello {{g.user['user_name']}}, welcome to platform</div>
-    {% elif g.env == 'production' %}
-      <div class="alert alert-danger" role="alert">You Must <a href="{{ url_for('auth.login') }}" class="alert-link">Login</a></div>
-    {% else %}
-      <div class="alert alert-danger" role="alert">You Must <a href="{{ url_for('auth.admin_login') }}" class="alert-link">Login</a></div>
-    {% endif %}
+<!--    {% elif g.env == 'production' %}-->
+<!--      <div class="alert alert-danger" role="alert">You Must <a href="{{ url_for('auth.login') }}" class="alert-link">Login</a></div>-->
+<!--    {% else %}-->
+<!--      <div class="alert alert-danger" role="alert">You Must <a href="{{ url_for('auth.admin_login') }}" class="alert-link">Login</a></div>-->
+<!--    {% endif %}-->
 </div>
 {% endblock %}

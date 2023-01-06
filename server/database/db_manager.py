@@ -1,11 +1,12 @@
 from server.utils.server_logger import g_logger as logger
 from .db_manager_report import DBManagerReport
 from .db_manager_task import DBManagerTask
+from .db_manager_user import DBManagerUser
 from server.flask_inst import g_app
 from server.db_inst import g_db
 
 
-class DBManager(DBManagerReport, DBManagerTask):
+class DBManager(DBManagerReport, DBManagerTask, DBManagerUser):
 
     def __init__(self, db):
         self.db_inst = db

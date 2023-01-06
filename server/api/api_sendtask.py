@@ -11,7 +11,7 @@ ns = api.namespace('send_task', description='Operations related to send task')
 @ns.route('/')
 class ApiSendTask(Resource):
     def get(self):
-        return {"task_id": "", "container_id": "", "queue_id": "","user_mail_list":""}
+        return {"task_id": "", "container_id": "", "queue_id": "", "user_mail_list": ""}
 
     def post(self):
         info = request.get_json(force=True)
@@ -26,6 +26,7 @@ class ApiSendTask(Resource):
         logger.info("{}!{}".format(result, info))
         return result
 
+
 @ns.route("/rerun")
 class ApiTaskRerun(Resource):
     @ns.doc(params={'celerytaskid': 'CeleryTaskID'})
@@ -38,6 +39,7 @@ class ApiTaskRerun(Resource):
         result = g_dbm.rerun_report_info_by_id(celerytaskid)
         return result
 
+
 @ns.route("/revoke")
 class ApiRevokeTask(Resource):
     @ns.doc(params={'deviceid': 'DeviceID'})
@@ -46,7 +48,7 @@ class ApiRevokeTask(Resource):
         logger.info("Revoke Task api called!")
         celerytaskid = request.args.get("celerytaskid")
         if celerytaskid:
-            logger.info("Revoke Task by celerytaskid: %s" %celerytaskid)
+            logger.info("Revoke Task by celerytaskid: %s" % celerytaskid)
             return g_trv.revoke_task_by_celerytaskid(celerytaskid=celerytaskid)
         deviceid = request.args.get("deviceid")
         if deviceid:
@@ -54,14 +56,16 @@ class ApiRevokeTask(Resource):
             return g_trv.revoke_task_by_devicetask(deviceid=deviceid)
         return "celerytaskid or deviceid is needed"
 
+
 @ns.route("/pause")
 class ApiRevokeTask(Resource):
-    @ns.doc(params={'celerytaskid': 'CeleryTaskID'}, description='This api will revoke task then rerun it. You will get a new task id here')
+    @ns.doc(params={'celerytaskid': 'CeleryTaskID'},
+            description='This api will revoke task then rerun it. You will get a new task id here')
     def post(self):
         logger.info("Pause Task api called!")
         celerytaskid = request.args.get("celerytaskid")
         if celerytaskid:
-            logger.info("Pause Task by celerytaskid: %s" %celerytaskid)
+            logger.info("Pause Task by celerytaskid: %s" % celerytaskid)
             logger.info("Firstly Revoke Task by celerytaskid: %s" % celerytaskid)
             result = g_trv.revoke_task_by_celerytaskid(celerytaskid=celerytaskid)
             if not result:
