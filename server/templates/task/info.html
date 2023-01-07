@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Report</h2>
+</div>
+<div class="container">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Alias</th>
+      <th>Type</th>
+      <th>CreatedTime</th>
+      <th>Editable</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+    <tr>
+      <td class="body">{{ post['ID'] }}</td>
+      <td class="body">{{ post['Alias'] }}</td>
+      <td class="body">{{ post['Type'] }}</td>
+      <td class="body">{{ post['CreatedTime'] }}</td>
+      <td> {% if post['Alias'] == 'default' %}
+        <a class="action" href="{{ url_for('task.update', id=post['ID']) }}">Edit</a>
+           {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

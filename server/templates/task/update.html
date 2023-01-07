@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>{% block title %}Edit Report -- {{ post['ID'] }} {% endblock %}</h2>
+</div>
+<div class="container">
+  <form class="admin-form form-horizontal" method="post">
+    <div class="form-group">
+      <label for="ID" class="col-md-2 control-label">ID</label>
+      <div class="col-md-10">
+        <input name="ID" id="ID"
+               value="{{ request.form['ID'] or post['ID'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Alias" class="col-md-2 control-label">Alias</label>
+      <div class="col-md-10">
+        <input name="Alias" id="Alias"
+               value="{{ request.form['Alias'] or post['Alias'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Type" class="col-md-2 control-label">Type</label>
+      <div class="col-md-10">
+        <input name="Type" id="Type"
+               value="{{ request.form['Type'] or post['Type'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="CreatedTime" class="col-md-2 control-label">CreatedTime</label>
+      <div class="col-md-10">
+        <input name="CreatedTime" id="CreatedTime"
+               value="{{ request.form['CreatedTime'] or post['CreatedTime'] }}" class="form-control" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10 submit-row">
+        <input type="submit" value="Save">
+      </div>
+    </div>
+  </form>
+      <div class="col-md-offset-2">
+        <form action="{{ url_for('task.delete', id=post['ID']) }}" method="post">
+          <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        </form>
+      </div>
+</div>
+{% endblock %}

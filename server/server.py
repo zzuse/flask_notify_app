@@ -11,6 +11,7 @@ from server.web.auth import auth_bp
 from server.web.index import index_bp
 from server.web.show_user import user_bp
 from server.web.show_report import report_bp
+from server.web.show_task import task_bp
 
 from .scheduler.task_statustimer import TaskTimer
 
@@ -44,6 +45,7 @@ def start_server():
     start_info(g_app, index_bp)
     start_info(g_app, user_bp)
     start_info(g_app, report_bp)
+    start_info(g_app, task_bp)
 
     g_logger.info("Starting Flask App...")
     g_app.run(host='0.0.0.0', port=8000, threaded=True, debug=False)
