@@ -17,11 +17,11 @@ class ApiSendTask(Resource):
         info = request.get_json(force=True)
         logger.info("send task api called!{}".format(info))
 
-        from server.celery_inst import g_celery, g_queues
+        from server.celery_inst import g_celery
         from server.server import g_dbm
 
         request_host = request.headers['Host']
-        g_ts = TaskSender(g_celery, g_queues, g_dbm, request_host)
+        g_ts = TaskSender(g_celery, "", g_dbm, request_host)
         result = g_ts.send(info)
         logger.info("{}!{}".format(result, info))
         return result

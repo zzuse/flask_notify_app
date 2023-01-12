@@ -7,7 +7,7 @@ class TestConfig(object):
     DEVICE_ALIAS = 'W_CFK'
     REPORT_INTERVAL = 5
 
-    REST_SERVER = "http://127.0.0.1:5000"
+    REST_SERVER = "http://127.0.0.1:8000"
     WELCOME_SERVICE = "/api/welcome/"
     DEVICE_SERVICE = "/api/device/"
     CLIENT_SERVICE = "/api/client/"

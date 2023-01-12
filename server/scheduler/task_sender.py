@@ -141,21 +141,22 @@ class TaskSender(object):
                 return "No task id in database: {}".format(self.task_id)
         logger.info("task::  %s" % (task))
 
-        container = self.dbm.query_container_by_id(self.container_id)
-        if not container:
-            return "No container id in database: {}".format(self.container_id)
-        logger.info("container::  %s" % (container))
+        container = ""
+        # container = self.dbm.query_container_by_id(self.container_id)
+        # if not container:
+        #     return "No container id in database: {}".format(self.container_id)
+        logger.info("container::  %s" % container)
 
         for device_id in self.device_id_list:
             if tasktype == '1':  # task.Type == '1'    send to all. Not work now, so don't use it
                 res_id = self.__send_bc__(task, container, self.parameter_list)
                 logger.debug("TaskSender:: broadcast done!")
             elif tasktype == '0':  # task.Type == '0'   send to one
-                device = self.dbm.query_device_by_id(device_id)
-                if not device:
-                    return "No device id in database: {}".format(device_id)
-                logger.info("device::  %s" % (device))
-                res_id = self.__send_p2p__(task, device, container, self.parameter_list)
+                # device = self.dbm.query_device_by_id(device_id)
+                # if not device:
+                #     return "No device id in database: {}".format(device_id)
+                logger.info("device::  %s" % device_id)
+                res_id = self.__send_p2p__(task, device_id, container, self.parameter_list)
                 logger.info("TaskSender:: send task done!")
             else:
                 return "No support tasktype: {}".format(tasktype)
@@ -211,11 +212,15 @@ class TaskSender(object):
     def __send_p2p__(self, task, device, container, parameterlist):
         packed_task = self.__pack_task__(task, device, container, parameterlist)
         logger.info("__send_p2p__ packed_task: %s" % (packed_task))
-        queue_name = device['QueueName']
-        self.queues[queue_name] = Queue(queue_name, exchange=Exchange('xxx', type='direct'), routing_key=queue_name)
-        self.celery.conf.update(CELERY_QUEUES=self.queues)
-        logger.info("__send_p2p__ queue name: %s" % queue_name)
-        res = self.celery.send_task('celery.dotask', args=[packed_task, ], queue=queue_name,
+        # self.queues[queue_name] = Queue(queue_name, exchange=Exchange('xxx', type='direct'), routing_key=queue_name)
+        # task_queues = (
+        #     Queue("macosx", Exchange('transit', delivery_mode=1),
+        #           routing_key='macosx', durable=False),
+        # )
+        task_queues = {"macosx": Queue("macosx", exchange=Exchange('transit', type='direct'), routing_key="macosx")}
+        self.celery.conf.update(queues=task_queues)
+        logger.info("__send_p2p__ queue name: %s" % device)
+        res = self.celery.send_task('celery.do_task', args=[packed_task, ], queue=device,
                                     task_id=str(uuid.uuid1()))  # task_id = uuid.uuid1()
         return res.id
 

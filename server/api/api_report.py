@@ -28,17 +28,12 @@ ns = api.namespace('report', description='Operations related to report')
 @ns.route("/")
 class ApiReport(Resource):
 
-    @ns.doc(params={'id': 'CeleryTaskID', 'email': 'OneEmail', 'device_id': 'DeviceId'})
+    @ns.doc(params={'email': 'OneEmail'})
     # @use_kwargs(args)
-    def get(self, id, email, device_id):
+    def get(self, email):
         from server.server import g_dbm
-        if id:
-            reports = g_dbm.query_join_report_info_by_id(id)
-        elif email:
+        if email:
             reports = g_dbm.query_join_report_info_by_email(email)
-        elif device_id:
-            result = g_dbm.query_reportid_by_deviceid(device_id)
-            return result
         else:
             reports = g_dbm.get_all_report()
         return {"report": reports}

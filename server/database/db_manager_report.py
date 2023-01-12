@@ -171,10 +171,6 @@ class DBManagerReport(DBBase):
                     report.update({"step": step_list})
 
                     arr.append(report)
-                    device_info = self.query_device_by_id(report['DeviceId'])
-                    arr.append(device_info)
-                    container_info = self.query_container_by_id(report['ContainerId'])
-                    arr.append(container_info)
                     if len(report['TaskID']):
                         task_info = self.query_task_by_id(report['TaskID'])
                         arr.append(task_info)
