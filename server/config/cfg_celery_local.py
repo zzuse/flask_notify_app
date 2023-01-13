@@ -1,5 +1,5 @@
 class CeleryConfig(object):
-    task_serializer = 'json'
+    task_serializer = 'pickle'
     result_serializer = 'json'
     worker_concurrency = 1
     task_create_missing_queues = True

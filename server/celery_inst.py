@@ -2,7 +2,7 @@ from server.utils.server_logger import g_logger
 from server.config.config_inst import g_cfg
 from celery import Celery
 
-g_celery = Celery(__name__, broker=g_cfg.celery_cfg.broker_url, backend=g_cfg.celery_cfg.result_backend)
+g_celery = Celery(__name__, broker=g_cfg.celery_cfg.broker_url, backend=g_cfg.celery_cfg.result_backend, include=['client.task'])
 g_logger.info("CELERY CFG: {}".format(__name__))
 g_celery.conf.update(
                      task_serializer=g_cfg.celery_cfg.task_serializer,

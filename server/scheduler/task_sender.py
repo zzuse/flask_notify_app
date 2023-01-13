@@ -167,15 +167,7 @@ class TaskSender(object):
             report_info = self.__report_info_init(celerytask_id=celerytask_id, device_id=device_id, task_id=task['ID'])
 
             logger.info(" user input mail_list {}".format(self.user_mail_list_l))
-
-            # container['MailList'] is list convert to str, like ["m@m.com"]
-            contmaill = container['MailList']
-
-            logger.info("user input mail_list %s" % (self.user_mail_list_str))
-            logger.info("containter's mail_list %s %s" % (type(contmaill), contmaill))
-
-            # self.user_mail_list_l is list. contmaill from db is str, like "["123","567"]"
-            wit = str(self.user_mail_list_l + list(eval(contmaill)))
+            wit = str(self.user_mail_list_l)
             logger.info("All mail_list %s %s" % (type(wit), wit))
 
             report_info['EmailReceiverList'] = wit
@@ -202,10 +194,7 @@ class TaskSender(object):
         report_info["StepDuringTime"] = []
         report_info["FailedReason"] = ""
         report_info['LastRunTime'] = datetime.now()
-        if g_cfg.server_cfg.BRAINPP_WH_HEADER in self.request_host:
-            report_info['ResyncPath'] = g_cfg.server_cfg.BRAINPP_WH_HOST
-        else:
-            report_info['ResyncPath'] = g_cfg.server_cfg.BRAINPP_HOST
+        report_info['ResyncPath'] = ""
         report_info['TaskOwner'] = self.task_owner
         return report_info
 
@@ -220,7 +209,7 @@ class TaskSender(object):
         task_queues = {"macosx": Queue("macosx", exchange=Exchange('transit', type='direct'), routing_key="macosx")}
         self.celery.conf.update(queues=task_queues)
         logger.info("__send_p2p__ queue name: %s" % device)
-        res = self.celery.send_task('celery.do_task', args=[packed_task, ], queue=device,
+        res = self.celery.send_task('client.task.do_task', args=[packed_task, ], queue=device,
                                     task_id=str(uuid.uuid1()))  # task_id = uuid.uuid1()
         return res.id
 
@@ -228,8 +217,8 @@ class TaskSender(object):
         packed_task = self.__pack_task__(task, [], container, parameterlist)
         logger.info("  __send_bc__  packed_task ::: %s" % (packed_task))
         self.queues['boardcast'] = Queue('boardcast', exchange=Exchange('boardcast', type='fanout'))
-        self.celery.conf.update(CELERY_QUEUES=self.queues)
-        res = self.celery.send_task('celery.dotask', args=[packed_task, ], queue='boardcast',
+        self.celery.conf.update(queues=self.queues)
+        res = self.celery.send_task('task.do_task', args=[packed_task, ], queue='boardcast',
                                     task_id=str(uuid.uuid1()))  # task_id = uuid.uuid1()
         logger.info(res.id)
         return res.id

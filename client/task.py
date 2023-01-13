@@ -4,25 +4,26 @@ from datetime import datetime
 import logging
 import traceback
 
-broker_url = "amqp://localhost"
-redis_url = "redis://localhost"
-g_celery = Celery('tasks', broker=broker_url, backend=redis_url)
+config = {}
+config['broker'] = 'amqp://guest:guest@127.0.0.1:5672//'
+config['backend'] = 'redis://127.0.0.1:6379/0'
+
+g_celery = Celery('do_task', broker=config['broker'], backend=config['backend'])
+g_celery.conf.update(
+    task_serializer='pickle',
+    result_serializer="json",
+    accept_content=['json'],
+    worker_concurrency=1,
+    task_create_missing_queues=True,
+    task_default_exchange='transit',
+    task_default_exchange_type='direct',
+    task_acks_late=True,
+    broker_pool_limit=1000
+)
 
 
-@g_celery.task(name='celery.do_task', bind=True)
+@g_celery.task(name='client.task.do_task', bind=True)
 def do_task(args):
-    g_celery.conf.update(broker="amqp://guest:guest@127.0.0.1:5672//",
-                         backend="redis://127.0.0.1:6379/db",
-                         result_serializer="json",
-                         task_serializer='json',
-                         accept_content=['json'],
-                         worker_concurrency=1,
-                         task_create_missing_queues=True,
-                         task_default_exchange='xxx',
-                         task_default_exchange_type='direct',
-                         task_acks_late=True,
-                         broker_pool_limit=1000
-                         )
     celery_task_start_time = datetime.now()
     # formatter = logging.Formatter('%(asctime)s %(module)s %(levelname)-4s: %(message)s')
     logger = logging.getLogger("client")
@@ -53,9 +54,8 @@ def do_task(args):
         logger.error(traceback.format_exc())
         return False
 
-
-@g_celery.task(name='celery.do_task', bind=True)
-def say_hello(name: str):
-    g_queues = {"macosx": Queue("macosx", exchange=Exchange('transit', type='direct'), routing_key="macosx")}
-    g_celery.conf.update(queues=g_queues)
-    return f"Hello {name}"
+# @g_celery.task(name='celery.do_task', bind=True)
+# def say_hello(name: str):
+#     g_queues = {"macosx": Queue("macosx", exchange=Exchange('transit', type='direct'), routing_key="macosx")}
+#     g_celery.conf.update(queues=g_queues)
+#     return f"Hello {name}"
